@@ -14,6 +14,8 @@ from typing import Dict, List, Set
 
 from . import pymupdf
 
+end_of_page = "-----PAGE BREAK-----"
+
 def mycenter(x):
     return (" %s " % x).center(75, "-")
 
@@ -549,7 +551,7 @@ def extract_objects(args):
 
 
 def page_simple(page, textout, GRID, fontsize, noformfeed, skip_empty, flags):
-    eop = b"\n" if noformfeed else bytes([12])
+    eop = b"\n" if noformfeed else end_of_page
     text = page.get_text("text", flags=flags)
     if not text:
         if not skip_empty:
@@ -561,7 +563,7 @@ def page_simple(page, textout, GRID, fontsize, noformfeed, skip_empty, flags):
 
 
 def page_blocksort(page, textout, GRID, fontsize, noformfeed, skip_empty, flags):
-    eop = b"\n" if noformfeed else bytes([12])
+    eop = b"\n" if noformfeed else end_of_page
     blocks = page.get_text("blocks", flags=flags)
     if blocks == []:
         if not skip_empty:
@@ -575,7 +577,7 @@ def page_blocksort(page, textout, GRID, fontsize, noformfeed, skip_empty, flags)
 
 
 def page_layout(page, textout, GRID, fontsize, noformfeed, skip_empty, flags):
-    eop = b"\n" if noformfeed else bytes([12])
+    eop = b"\n" if noformfeed else end_of_page
 
     # --------------------------------------------------------------------
     def find_line_index(values: List[int], value: int) -> int:
