@@ -14,7 +14,7 @@ from typing import Dict, List, Set
 
 from . import pymupdf
 
-end_of_page = "-----PAGE BREAK-----"
+end_of_page = b"-----PAGE BREAK-----"
 
 def mycenter(x):
     return (" %s " % x).center(75, "-")
