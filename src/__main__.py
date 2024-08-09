@@ -682,7 +682,7 @@ def page_layout(page, textout, GRID, fontsize, noformfeed, skip_empty, flags):
         return lig
 
     # --------------------------------------------------------------------
-    def make_textline(left, slot, minslot, lchars):
+    def make_textline(left, slot, _minslot, lchars):
         """Produce the text of one output line.
 
         Args:
@@ -697,11 +697,16 @@ def page_layout(page, textout, GRID, fontsize, noformfeed, skip_empty, flags):
         old_char = ""
         old_x1 = 0  # end coordinate of last char
         old_ox = 0  # x-origin of last char
-        if minslot <= pymupdf.EPSILON:
-            raise RuntimeError("program error: minslot too small = %g" % minslot)
-
+        minslot = 0
+        if _minslot <= pymupdf.EPSILON:
+            # raise RuntimeError("program error: minslot too small = %g" % minslot)
+            minslot = 1
+        else:
+            minslot = _minslot
         for c in lchars:  # loop over characters
             char, ox, _, cwidth = c
+            if cwidth == 0:
+                cwidth = 1
             ox = ox - left  # its (relative) start coordinate
             x1 = ox + cwidth  # ending coordinate
 
